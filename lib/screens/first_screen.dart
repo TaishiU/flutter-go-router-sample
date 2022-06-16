@@ -22,9 +22,9 @@ class FirstScreen extends StatelessWidget {
               SizedBox(
                 height: 100,
                 child: ElevatedButton(
-                  onPressed: () => context.go('/second'),
+                  onPressed: () => context.go('/Second'),
                   child: const Text(
-                    'go /second',
+                    'go /Second',
                     style: textStyle,
                   ),
                 ),
@@ -33,9 +33,9 @@ class FirstScreen extends StatelessWidget {
               SizedBox(
                 height: 100,
                 child: ElevatedButton(
-                  onPressed: () => context.push('/second'),
+                  onPressed: () => context.push('/Second'),
                   child: const Text(
-                    'push /second',
+                    'push /Second',
                     style: textStyle,
                   ),
                 ),
@@ -44,9 +44,9 @@ class FirstScreen extends StatelessWidget {
               SizedBox(
                 height: 100,
                 child: ElevatedButton(
-                  onPressed: () => context.go('/third'),
+                  onPressed: () => context.go('/Third'),
                   child: const Text(
-                    'go /third',
+                    'go /Third',
                     style: textStyle,
                   ),
                 ),
