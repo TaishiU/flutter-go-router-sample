@@ -27,7 +27,12 @@ class FirstScreen extends StatelessWidget {
               SizedBox(
                 height: 100,
                 child: ElevatedButton(
-                  onPressed: () => context.goNamed(SecondScreen.name),
+                  onPressed: () => context.goNamed(
+                    SecondScreen.name,
+                    params: {
+                      'paramTitle': '①引数を渡すことに成功🎉',
+                    },
+                  ),
                   child: const Text(
                     'go /Second',
                     style: textStyle,
@@ -38,7 +43,12 @@ class FirstScreen extends StatelessWidget {
               SizedBox(
                 height: 100,
                 child: ElevatedButton(
-                  onPressed: () => context.pushNamed(SecondScreen.name),
+                  onPressed: () => context.pushNamed(
+                    SecondScreen.name,
+                    params: {
+                      'paramTitle': '②引数を渡すことに成功🎉',
+                    },
+                  ),
                   child: const Text(
                     'push /Second',
                     style: textStyle,
@@ -49,7 +59,12 @@ class FirstScreen extends StatelessWidget {
               SizedBox(
                 height: 100,
                 child: ElevatedButton(
-                  onPressed: () => context.goNamed(ThirdScreen.name),
+                  onPressed: () => context.goNamed(
+                    ThirdScreen.name,
+                    params: {
+                      'number': '3',
+                    },
+                  ),
                   child: const Text(
                     'go /Third',
                     style: textStyle,

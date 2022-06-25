@@ -13,14 +13,20 @@ final router = GoRouter(
       builder: (context, state) => const FirstScreen(),
       routes: [
         GoRoute(
-          path: SecondScreen.path,
+          path: '${SecondScreen.path}/:paramTitle',
           name: SecondScreen.name,
-          builder: (context, state) => const SecondScreen(),
+          builder: (context, state) {
+            final paramTitle = state.params['paramTitle']!;
+            return SecondScreen(paramTitle: paramTitle);
+          },
         ),
         GoRoute(
-          path: ThirdScreen.path,
+          path: '${ThirdScreen.path}/:number',
           name: ThirdScreen.name,
-          builder: (context, state) => const ThirdScreen(),
+          builder: (context, state) {
+            final number = int.parse(state.params['number']!);
+            return ThirdScreen(number: number);
+          },
         )
       ],
     ),
