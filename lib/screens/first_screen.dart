@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:go_router_sample/screens/second_screen.dart';
+import 'package:go_router_sample/screens/third_screen.dart';
 
 class FirstScreen extends StatelessWidget {
   const FirstScreen({Key? key}) : super(key: key);
+
+  static const path = '/first_screen';
+  static const name = '/first_screen';
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +27,7 @@ class FirstScreen extends StatelessWidget {
               SizedBox(
                 height: 100,
                 child: ElevatedButton(
-                  onPressed: () => context.go('/Second'),
+                  onPressed: () => context.goNamed(SecondScreen.name),
                   child: const Text(
                     'go /Second',
                     style: textStyle,
@@ -33,7 +38,7 @@ class FirstScreen extends StatelessWidget {
               SizedBox(
                 height: 100,
                 child: ElevatedButton(
-                  onPressed: () => context.push('/Second'),
+                  onPressed: () => context.pushNamed(SecondScreen.name),
                   child: const Text(
                     'push /Second',
                     style: textStyle,
@@ -44,7 +49,7 @@ class FirstScreen extends StatelessWidget {
               SizedBox(
                 height: 100,
                 child: ElevatedButton(
-                  onPressed: () => context.go('/Third'),
+                  onPressed: () => context.goNamed(ThirdScreen.name),
                   child: const Text(
                     'go /Third',
                     style: textStyle,

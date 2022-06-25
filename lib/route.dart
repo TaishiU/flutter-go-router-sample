@@ -5,18 +5,21 @@ import 'screens/second_screen.dart';
 import 'screens/third_screen.dart';
 
 final router = GoRouter(
-  initialLocation: '/',
+  initialLocation: FirstScreen.path,
   routes: [
     GoRoute(
-      path: '/',
+      path: FirstScreen.path,
+      name: FirstScreen.name,
       builder: (context, state) => const FirstScreen(),
       routes: [
         GoRoute(
-          path: 'second',
+          path: SecondScreen.path,
+          name: SecondScreen.name,
           builder: (context, state) => const SecondScreen(),
         ),
         GoRoute(
-          path: 'third',
+          path: ThirdScreen.path,
+          name: ThirdScreen.name,
           builder: (context, state) => const ThirdScreen(),
         )
       ],
