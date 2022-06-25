@@ -1,12 +1,18 @@
 import 'package:go_router/go_router.dart';
+import 'package:go_router_sample/screens/login_screen.dart';
 
 import 'screens/first_screen.dart';
 import 'screens/second_screen.dart';
 import 'screens/third_screen.dart';
 
 final router = GoRouter(
-  initialLocation: FirstScreen.path,
+  initialLocation: LoginScreen.path,
   routes: [
+    GoRoute(
+      path: LoginScreen.path,
+      name: LoginScreen.name,
+      builder: (context, state) => const LoginScreen(),
+    ),
     GoRoute(
       path: FirstScreen.path,
       name: FirstScreen.name,
