@@ -39,8 +39,8 @@ class AuthController extends StateNotifier<AuthState> {
 
   Future<void> onAuthStateChanged() async {
     print('ログイン状態判断メソッド: onAuthStateChanged()');
-    // await deleteStorage();
-    await readStorage();
+    await deleteStorage();
+    // await readStorage();
   }
 
   Future<void> deleteStorage() async {
@@ -81,6 +81,7 @@ class AuthController extends StateNotifier<AuthState> {
     ref
         .read(authStatusController.notifier)
         .changeAuthStatus(AuthStatus.signedIn);
+    cleaLoginData();
   }
 
   Future<void> logout() async {
@@ -145,5 +146,14 @@ class AuthController extends StateNotifier<AuthState> {
       _secureStorage.delete(key: 'email'),
       _secureStorage.delete(key: 'password'),
     ]);
+  }
+
+  void cleaLoginData() {
+    emailController.clear();
+    passwordController.clear();
+    state = state.copyWith(
+      email: '',
+      password: '',
+    );
   }
 }
