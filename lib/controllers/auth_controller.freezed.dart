@@ -16,8 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthState {
-// @Default(AuthStatus.notSignedIn) AuthStatus status,
   bool get isObscure => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
+  String get emailError => throw _privateConstructorUsedError;
+  String get passwordError => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthStateCopyWith<AuthState> get copyWith =>
@@ -28,7 +31,12 @@ mixin _$AuthState {
 abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
       _$AuthStateCopyWithImpl<$Res>;
-  $Res call({bool isObscure});
+  $Res call(
+      {bool isObscure,
+      String email,
+      String password,
+      String emailError,
+      String passwordError});
 }
 
 /// @nodoc
@@ -42,12 +50,32 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
   @override
   $Res call({
     Object? isObscure = freezed,
+    Object? email = freezed,
+    Object? password = freezed,
+    Object? emailError = freezed,
+    Object? passwordError = freezed,
   }) {
     return _then(_value.copyWith(
       isObscure: isObscure == freezed
           ? _value.isObscure
           : isObscure // ignore: cast_nullable_to_non_nullable
               as bool,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: password == freezed
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      emailError: emailError == freezed
+          ? _value.emailError
+          : emailError // ignore: cast_nullable_to_non_nullable
+              as String,
+      passwordError: passwordError == freezed
+          ? _value.passwordError
+          : passwordError // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -58,7 +86,12 @@ abstract class _$$_AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
           _$_AuthState value, $Res Function(_$_AuthState) then) =
       __$$_AuthStateCopyWithImpl<$Res>;
   @override
-  $Res call({bool isObscure});
+  $Res call(
+      {bool isObscure,
+      String email,
+      String password,
+      String emailError,
+      String passwordError});
 }
 
 /// @nodoc
@@ -74,12 +107,32 @@ class __$$_AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isObscure = freezed,
+    Object? email = freezed,
+    Object? password = freezed,
+    Object? emailError = freezed,
+    Object? passwordError = freezed,
   }) {
     return _then(_$_AuthState(
       isObscure: isObscure == freezed
           ? _value.isObscure
           : isObscure // ignore: cast_nullable_to_non_nullable
               as bool,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: password == freezed
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      emailError: emailError == freezed
+          ? _value.emailError
+          : emailError // ignore: cast_nullable_to_non_nullable
+              as String,
+      passwordError: passwordError == freezed
+          ? _value.passwordError
+          : passwordError // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -87,16 +140,32 @@ class __$$_AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AuthState implements _AuthState {
-  const _$_AuthState({this.isObscure = true});
+  const _$_AuthState(
+      {this.isObscure = true,
+      this.email = '',
+      this.password = '',
+      this.emailError = '',
+      this.passwordError = ''});
 
-// @Default(AuthStatus.notSignedIn) AuthStatus status,
   @override
   @JsonKey()
   final bool isObscure;
+  @override
+  @JsonKey()
+  final String email;
+  @override
+  @JsonKey()
+  final String password;
+  @override
+  @JsonKey()
+  final String emailError;
+  @override
+  @JsonKey()
+  final String passwordError;
 
   @override
   String toString() {
-    return 'AuthState(isObscure: $isObscure)';
+    return 'AuthState(isObscure: $isObscure, email: $email, password: $password, emailError: $emailError, passwordError: $passwordError)';
   }
 
   @override
@@ -104,12 +173,23 @@ class _$_AuthState implements _AuthState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AuthState &&
-            const DeepCollectionEquality().equals(other.isObscure, isObscure));
+            const DeepCollectionEquality().equals(other.isObscure, isObscure) &&
+            const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality().equals(other.password, password) &&
+            const DeepCollectionEquality()
+                .equals(other.emailError, emailError) &&
+            const DeepCollectionEquality()
+                .equals(other.passwordError, passwordError));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(isObscure));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(isObscure),
+      const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(password),
+      const DeepCollectionEquality().hash(emailError),
+      const DeepCollectionEquality().hash(passwordError));
 
   @JsonKey(ignore: true)
   @override
@@ -118,10 +198,23 @@ class _$_AuthState implements _AuthState {
 }
 
 abstract class _AuthState implements AuthState {
-  const factory _AuthState({final bool isObscure}) = _$_AuthState;
+  const factory _AuthState(
+      {final bool isObscure,
+      final String email,
+      final String password,
+      final String emailError,
+      final String passwordError}) = _$_AuthState;
 
-  @override // @Default(AuthStatus.notSignedIn) AuthStatus status,
+  @override
   bool get isObscure => throw _privateConstructorUsedError;
+  @override
+  String get email => throw _privateConstructorUsedError;
+  @override
+  String get password => throw _privateConstructorUsedError;
+  @override
+  String get emailError => throw _privateConstructorUsedError;
+  @override
+  String get passwordError => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_AuthStateCopyWith<_$_AuthState> get copyWith =>

@@ -7,13 +7,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 part 'auth_controller.freezed.dart';
 
-// enum AuthStatus { none, notSignedIn, signedIn }
-
 @freezed
 abstract class AuthState with _$AuthState {
   const factory AuthState({
-    // @Default(AuthStatus.notSignedIn) AuthStatus status,
     @Default(true) bool isObscure,
+    @Default('') String email,
+    @Default('') String password,
+    @Default('') String emailError,
+    @Default('') String passwordError,
   }) = _AuthState;
 }
 
@@ -37,45 +38,56 @@ class AuthController extends StateNotifier<AuthState> {
   }
 
   Future<void> onAuthStateChanged() async {
-    // print('初期status: ${state.status}');
-    const storage = FlutterSecureStorage();
-    // storage.deleteAll();
-    // final token = await storage.read(key: 'accessToken');
-    // if (token == null) {
-    //   print('tokenがnullです');
-    //   state = state.copyWith(status: AuthStatus.notSignedIn);
-    // } else {
-    //   print('tokenを保存しています！');
-    //   print('token: $token');
-    //   state = state.copyWith(
-    //     status: AuthStatus.signedIn,
-    //     token: token,
-    //   );
-    // }
+    print('ログイン状態判断メソッド: onAuthStateChanged()');
+    // await deleteStorage();
+    await readStorage();
+  }
+
+  Future<void> deleteStorage() async {
+    _secureStorage.deleteAll();
+  }
+
+  Future<void> readStorage() async {
+    final email = await _secureStorage.read(key: 'email');
+    final password = await _secureStorage.read(key: 'password');
+
+    if (email != null && password != null) {
+      ref
+          .read(authStatusController.notifier)
+          .changeAuthStatus(AuthStatus.signedIn);
+    }
+  }
+
+  void onChangedEmail(String email) {
+    state = state.copyWith(email: email);
+  }
+
+  void onChangedPassword(String password) {
+    state = state.copyWith(password: password);
   }
 
   void switchObscure() {
-    // if (state.isObscure) {
     state = state.copyWith(isObscure: !state.isObscure);
-    print('isObscure: ${state.isObscure}');
-    // } else {
-    //   state = state.copyWith(isObscure: true);
-    // }
   }
 
-  void login() {
-    // state = state.copyWith(status: AuthStatus.signedIn);
+  Future<void> login() async {
+    if (state.email == '' || state.password == '') {
+      return;
+    }
+    await writeLoginData(
+      email: state.email,
+      password: state.password,
+    );
     ref
         .read(authStatusController.notifier)
         .changeAuthStatus(AuthStatus.signedIn);
-    // print('login()');
-    // print('status: ${state.status}');
   }
 
-  void logout() {
+  Future<void> logout() async {
     ref
         .read(authStatusController.notifier)
         .changeAuthStatus(AuthStatus.notSignedIn);
+    await deleteLoginData();
   }
 
   // void changeLoginButtonStatus() {
@@ -118,11 +130,20 @@ class AuthController extends StateNotifier<AuthState> {
   //   }
   // }
 
-  Future<void> _writeLoginData({
-    required String accessToken,
+  Future<void> writeLoginData({
+    required String email,
+    required String password,
   }) async {
     await Future.wait([
-      _secureStorage.write(key: 'accessToken', value: accessToken),
+      _secureStorage.write(key: 'email', value: email),
+      _secureStorage.write(key: 'password', value: password),
+    ]);
+  }
+
+  Future<void> deleteLoginData() async {
+    await Future.wait([
+      _secureStorage.delete(key: 'email'),
+      _secureStorage.delete(key: 'password'),
     ]);
   }
 }

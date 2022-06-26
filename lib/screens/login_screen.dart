@@ -67,6 +67,8 @@ class _Email extends HookConsumerWidget {
           controller: ref.read(authController.notifier).emailController,
           style: const TextStyle(fontSize: 20),
           keyboardType: TextInputType.emailAddress,
+          onChanged: (String? email) =>
+              ref.read(authController.notifier).onChangedEmail(email!),
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 10),
             hintText: 'Email',
@@ -102,6 +104,8 @@ class _Password extends HookConsumerWidget {
           obscureText: isObscure,
           style: const TextStyle(fontSize: 20),
           keyboardType: TextInputType.visiblePassword,
+          onChanged: (String? password) =>
+              ref.read(authController.notifier).onChangedPassword(password!),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(
               vertical: 10,
@@ -131,21 +135,25 @@ class _LoginButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final email = ref.watch(authController.select((value) => value.email));
+    final password =
+        ref.watch(authController.select((value) => value.password));
+    final emailOrPasswordIsEmpty = email == '' || password == '';
+
     return SizedBox(
       height: 60,
       width: MediaQuery.of(context).size.width,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Colors.black,
+          primary: emailOrPasswordIsEmpty ? Colors.grey.shade300 : Colors.blue,
           onPrimary: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
         ),
-        onPressed: () => ref.read(authController.notifier).login(),
-        // onPressed: () {
-        //   context.goNamed(FirstScreen.name);
-        // },
+        onPressed: emailOrPasswordIsEmpty
+            ? null
+            : () => ref.read(authController.notifier).login(),
         child: const Text(
           'Login',
           style: TextStyle(
