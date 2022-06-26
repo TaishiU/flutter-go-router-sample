@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:go_router_sample/auth_widget.dart';
 import 'package:go_router_sample/screens/login_screen.dart';
 
 import 'screens/first_screen.dart';
@@ -6,12 +8,27 @@ import 'screens/second_screen.dart';
 import 'screens/third_screen.dart';
 
 final router = GoRouter(
-  initialLocation: LoginScreen.path,
+  // initialLocation: LoginScreen.path,
+  initialLocation: '/',
   routes: [
+    GoRoute(
+      path: '/',
+      pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: const AuthWidget(),
+      ),
+    ),
     GoRoute(
       path: LoginScreen.path,
       name: LoginScreen.name,
       builder: (context, state) => const LoginScreen(),
+      // routes: [
+      //   GoRoute(
+      //     path: FirstScreen.path,
+      //     name: FirstScreen.name,
+      //     builder: (context, state) => const FirstScreen(),
+      //   ),
+      // ],
     ),
     GoRoute(
       path: FirstScreen.path,
@@ -37,4 +54,5 @@ final router = GoRouter(
       ],
     ),
   ],
+  redirect: (state) {},
 );

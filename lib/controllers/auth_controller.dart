@@ -31,6 +31,7 @@ class AuthController extends StateNotifier<AuthState> {
   }
 
   Future<void> onAuthStateChanged() async {
+    print('初期status: ${state.status}');
     const storage = FlutterSecureStorage();
     // storage.deleteAll();
     // final token = await storage.read(key: 'accessToken');
@@ -45,6 +46,12 @@ class AuthController extends StateNotifier<AuthState> {
     //     token: token,
     //   );
     // }
+  }
+
+  void login() {
+    state = state.copyWith(status: AuthStatus.signedIn);
+    print('login()');
+    print('status: ${state.status}');
   }
 
   // void changeLoginButtonStatus() {

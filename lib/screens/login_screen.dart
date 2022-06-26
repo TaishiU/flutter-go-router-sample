@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:go_router_sample/screens/first_screen.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends HookConsumerWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   static const path = '/login_screen';
   static const name = '/login_screen';
 
   @override
-  Widget build(BuildContext context) {
-    // final formKey = GlobalKey<FormState>();
-    // late String _email;
-    // late String _password;
-    // bool _isObscure = true;
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -101,7 +100,10 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onPressed: () {},
+                    // onPressed: () => ref.read(authController.notifier).login(),
+                    onPressed: () {
+                      context.goNamed(FirstScreen.name);
+                    },
                     child: const Text(
                       'Login',
                       style: TextStyle(

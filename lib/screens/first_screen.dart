@@ -8,6 +8,8 @@ class FirstScreen extends StatelessWidget {
 
   static const path = '/first_screen';
   static const name = '/first_screen';
+  // static const path = 'first_screen';
+  // static const name = 'first_screen';
 
   @override
   Widget build(BuildContext context) {
