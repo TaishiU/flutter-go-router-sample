@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthState {
-  AuthStatus get status => throw _privateConstructorUsedError;
+// @Default(AuthStatus.notSignedIn) AuthStatus status,
+  bool get isObscure => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthStateCopyWith<AuthState> get copyWith =>
@@ -27,7 +28,7 @@ mixin _$AuthState {
 abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
       _$AuthStateCopyWithImpl<$Res>;
-  $Res call({AuthStatus status});
+  $Res call({bool isObscure});
 }
 
 /// @nodoc
@@ -40,13 +41,13 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? status = freezed,
+    Object? isObscure = freezed,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as AuthStatus,
+      isObscure: isObscure == freezed
+          ? _value.isObscure
+          : isObscure // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -57,7 +58,7 @@ abstract class _$$_AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
           _$_AuthState value, $Res Function(_$_AuthState) then) =
       __$$_AuthStateCopyWithImpl<$Res>;
   @override
-  $Res call({AuthStatus status});
+  $Res call({bool isObscure});
 }
 
 /// @nodoc
@@ -72,13 +73,13 @@ class __$$_AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? status = freezed,
+    Object? isObscure = freezed,
   }) {
     return _then(_$_AuthState(
-      status: status == freezed
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as AuthStatus,
+      isObscure: isObscure == freezed
+          ? _value.isObscure
+          : isObscure // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -86,15 +87,16 @@ class __$$_AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AuthState implements _AuthState {
-  const _$_AuthState({this.status = AuthStatus.notSignedIn});
+  const _$_AuthState({this.isObscure = true});
 
+// @Default(AuthStatus.notSignedIn) AuthStatus status,
   @override
   @JsonKey()
-  final AuthStatus status;
+  final bool isObscure;
 
   @override
   String toString() {
-    return 'AuthState(status: $status)';
+    return 'AuthState(isObscure: $isObscure)';
   }
 
   @override
@@ -102,12 +104,12 @@ class _$_AuthState implements _AuthState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AuthState &&
-            const DeepCollectionEquality().equals(other.status, status));
+            const DeepCollectionEquality().equals(other.isObscure, isObscure));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(status));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(isObscure));
 
   @JsonKey(ignore: true)
   @override
@@ -116,10 +118,10 @@ class _$_AuthState implements _AuthState {
 }
 
 abstract class _AuthState implements AuthState {
-  const factory _AuthState({final AuthStatus status}) = _$_AuthState;
+  const factory _AuthState({final bool isObscure}) = _$_AuthState;
 
-  @override
-  AuthStatus get status => throw _privateConstructorUsedError;
+  @override // @Default(AuthStatus.notSignedIn) AuthStatus status,
+  bool get isObscure => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_AuthStateCopyWith<_$_AuthState> get copyWith =>

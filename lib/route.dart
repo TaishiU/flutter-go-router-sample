@@ -4,6 +4,7 @@ import 'package:go_router_sample/providers.dart';
 import 'package:go_router_sample/screens/login_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'controllers/auth_status_controller.dart';
 import 'screens/first_screen.dart';
 import 'screens/second_screen.dart';
 import 'screens/third_screen.dart';
@@ -42,7 +43,7 @@ final routerProvider = Provider(
       ),
     ],
     redirect: (state) {
-      final status = ref.watch(authController.select((state) => state.status));
+      final status = ref.watch(authStatusController.select((state) => state.status));
       print('redirect) status: $status');
       if (status == AuthStatus.notSignedIn) {
         //ログインしていなければLoginScreenへ遷移

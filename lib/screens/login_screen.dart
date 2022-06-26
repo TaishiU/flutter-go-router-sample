@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:go_router_sample/screens/first_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../providers.dart';
@@ -15,12 +13,17 @@ class LoginScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(
-      authController,
-          (_, __) {
+      authStatusController,
+      (_, __) {
         print('ref.listenが呼ばれました');
         ref.refresh(routerProvider);
       },
     );
+    // ref.listen(authController, (previous, next) {
+    //   print('ref.listenが呼ばれました');
+    //   print('previous: $previous');
+    //   print('next: $next');
+    // });
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -28,105 +31,132 @@ class LoginScreen extends HookConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
-              children: [
-                const SizedBox(height: 100),
-                const Text(
+              children: const [
+                SizedBox(height: 100),
+                Text(
                   'Welcome👋',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 30,
                   ),
                 ),
-                const SizedBox(height: 100),
-                Container(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                  ),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 20,
-                      ),
-                      hintText: 'Email',
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      border: InputBorder.none,
-                    ),
-                    onChanged: (value) {
-                      // _email = value;
-                    },
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                  ),
-                  child: TextFormField(
-                    // obscureText: _isObscure,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 20,
-                      ),
-                      hintText: 'Password',
-                      hintStyle: const TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      border: InputBorder.none,
-                      suffixIcon: IconButton(
-                        icon: const Icon(
-                          Icons.visibility_off,
-                          // _isObscure
-                          //     ? Icons.visibility_off
-                          //     : Icons.visibility,
-                        ),
-                        onPressed: () {},
-                      ),
-                    ),
-                    onChanged: (value) {
-                      // _password = value;
-                    },
-                    keyboardType: TextInputType.visiblePassword,
-                  ),
-                ),
-                const SizedBox(height: 100),
-                SizedBox(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.black,
-                      onPrimary: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    onPressed: () => ref.read(authController.notifier).login(),
-                    // onPressed: () {
-                    //   context.goNamed(FirstScreen.name);
-                    // },
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 23,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                ),
+                SizedBox(height: 100),
+                _Email(),
+                SizedBox(height: 10),
+                _Password(),
+                SizedBox(height: 100),
+                _LoginButton(),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Email extends HookConsumerWidget {
+  const _Email({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      height: 60,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: TextFormField(
+          controller: ref.read(authController.notifier).emailController,
+          style: const TextStyle(fontSize: 20),
+          keyboardType: TextInputType.emailAddress,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: 10),
+            hintText: 'Email',
+            hintStyle: TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.w400,
+            ),
+            border: InputBorder.none,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Password extends HookConsumerWidget {
+  const _Password({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isObscure =
+        ref.watch(authController.select((value) => value.isObscure));
+    return Container(
+      height: 60,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: TextFormField(
+          controller: ref.read(authController.notifier).passwordController,
+          obscureText: isObscure,
+          style: const TextStyle(fontSize: 20),
+          keyboardType: TextInputType.visiblePassword,
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 10,
+            ),
+            hintText: 'Password',
+            hintStyle: const TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.w400,
+            ),
+            border: InputBorder.none,
+            suffixIcon: GestureDetector(
+              onTap: () => ref.read(authController.notifier).switchObscure(),
+              child: Icon(
+                isObscure ? Icons.visibility_off : Icons.visibility,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LoginButton extends HookConsumerWidget {
+  const _LoginButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SizedBox(
+      height: 60,
+      width: MediaQuery.of(context).size.width,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.black,
+          onPrimary: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        onPressed: () => ref.read(authController.notifier).login(),
+        // onPressed: () {
+        //   context.goNamed(FirstScreen.name);
+        // },
+        child: const Text(
+          'Login',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 23,
+            fontWeight: FontWeight.normal,
           ),
         ),
       ),
