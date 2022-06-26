@@ -10,19 +10,23 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends HookConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routeInformationProvider: router.routeInformationProvider,
-      routeInformationParser: router.routeInformationParser,
-      routerDelegate: router.routerDelegate,
+      // routeInformationProvider: router.routeInformationProvider,
+      // routeInformationParser: router.routeInformationParser,
+      // routerDelegate: router.routerDelegate,
+      routeInformationProvider:
+          ref.watch(routerProvider).routeInformationProvider,
+      routeInformationParser: ref.watch(routerProvider).routeInformationParser,
+      routerDelegate: ref.watch(routerProvider).routerDelegate,
     );
   }
 }
