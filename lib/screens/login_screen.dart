@@ -3,6 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:go_router_sample/screens/first_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../providers.dart';
+import '../route.dart';
+
 class LoginScreen extends HookConsumerWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -11,6 +14,14 @@ class LoginScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(
+      authController,
+          (_, __) {
+        print('ref.listenが呼ばれました');
+        ref.refresh(routerProvider);
+      },
+    );
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -100,10 +111,10 @@ class LoginScreen extends HookConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    // onPressed: () => ref.read(authController.notifier).login(),
-                    onPressed: () {
-                      context.goNamed(FirstScreen.name);
-                    },
+                    onPressed: () => ref.read(authController.notifier).login(),
+                    // onPressed: () {
+                    //   context.goNamed(FirstScreen.name);
+                    // },
                     child: const Text(
                       'Login',
                       style: TextStyle(

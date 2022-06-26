@@ -20,9 +20,6 @@ class MyApp extends HookConsumerWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // routeInformationProvider: router.routeInformationProvider,
-      // routeInformationParser: router.routeInformationParser,
-      // routerDelegate: router.routerDelegate,
       routeInformationProvider:
           ref.watch(routerProvider).routeInformationProvider,
       routeInformationParser: ref.watch(routerProvider).routeInformationParser,
