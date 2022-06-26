@@ -19,11 +19,6 @@ class LoginScreen extends HookConsumerWidget {
         ref.refresh(routerProvider);
       },
     );
-    // ref.listen(authController, (previous, next) {
-    //   print('ref.listenが呼ばれました');
-    //   print('previous: $previous');
-    //   print('next: $next');
-    // });
 
     return Scaffold(
       body: SingleChildScrollView(

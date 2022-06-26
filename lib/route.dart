@@ -44,7 +44,7 @@ final routerProvider = Provider(
     ],
     redirect: (state) {
       final status = ref.watch(authStatusController.select((state) => state.status));
-      print('redirect) status: $status');
+      // print('redirect) status: $status');
       if (status == AuthStatus.notSignedIn) {
         //ログインしていなければLoginScreenへ遷移
         //元々LoginScreenに向かっている(state.subloc == LoginScreen.path)場合はnullを返す
@@ -54,7 +54,7 @@ final routerProvider = Provider(
       }
       //ログインしていればFirstScreenへ遷移
       if (status == AuthStatus.signedIn) {
-        print('FirstScreenへ遷移');
+        // print('FirstScreenへ遷移');
         //「return FirstScreen.path;」とすると「redirect loop detected」とエラーが出る
         //（例） / => /first_screen => /first_screen
         //理由は、nullを返さない限り無限リダイレクトが起きるため

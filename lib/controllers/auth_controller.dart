@@ -72,6 +72,12 @@ class AuthController extends StateNotifier<AuthState> {
     // print('status: ${state.status}');
   }
 
+  void logout() {
+    ref
+        .read(authStatusController.notifier)
+        .changeAuthStatus(AuthStatus.notSignedIn);
+  }
+
   // void changeLoginButtonStatus() {
   //   state = state.copyWith(
   //     isLoginButtonDisabled: passwordController.text.isEmpty,
