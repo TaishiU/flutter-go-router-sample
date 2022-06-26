@@ -21,27 +21,36 @@ class LoginScreen extends HookConsumerWidget {
     );
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: const [
-                SizedBox(height: 100),
-                Text(
-                  'Welcome👋',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          final currentScope = FocusScope.of(context);
+          if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+            FocusManager.instance.primaryFocus?.unfocus();
+          }
+        },
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: const [
+                  SizedBox(height: 100),
+                  Text(
+                    'Welcome👋',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                    ),
                   ),
-                ),
-                SizedBox(height: 100),
-                _Email(),
-                SizedBox(height: 10),
-                _Password(),
-                SizedBox(height: 100),
-                _LoginButton(),
-              ],
+                  SizedBox(height: 100),
+                  _Email(),
+                  SizedBox(height: 10),
+                  _Password(),
+                  SizedBox(height: 100),
+                  _LoginButton(),
+                ],
+              ),
             ),
           ),
         ),
@@ -153,7 +162,10 @@ class _LoginButton extends HookConsumerWidget {
         ),
         onPressed: emailOrPasswordIsEmpty
             ? null
-            : () => ref.read(authController.notifier).login(),
+            : () {
+                FocusScope.of(context).unfocus();
+                ref.read(authController.notifier).login();
+              },
         child: const Text(
           'Login',
           style: TextStyle(

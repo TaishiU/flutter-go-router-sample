@@ -39,8 +39,8 @@ class AuthController extends StateNotifier<AuthState> {
 
   Future<void> onAuthStateChanged() async {
     print('ログイン状態判断メソッド: onAuthStateChanged()');
-    await deleteStorage();
-    // await readStorage();
+    // await deleteStorage();
+    await readStorage();
   }
 
   Future<void> deleteStorage() async {
